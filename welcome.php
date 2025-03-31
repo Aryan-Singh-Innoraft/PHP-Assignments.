@@ -27,6 +27,7 @@
                 }
             }
             ?>
+            
             <?php
             if($uploadOk==0){
                 echo "Sorry try again.";
@@ -43,11 +44,33 @@
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $firstName = htmlspecialchars($_POST["firstname"]);
                 $lastName = htmlspecialchars($_POST["lastname"]);
-            ?>
+                $marksInput = trim($_POST["marksField"]);
+                $linesOfMarks = explode("\n",$marksInput);
+                ?>
             <h1 class="heading">Hello <?php echo $firstName." ".$lastName;?></h1>
+            <table class="marks-table">
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                </tr>
+            <?php
+                //Process each line of marks
+                foreach($linesOfMarks as $line) {
+                    $line = trim($line);
+                    $parts = explode("|",$line);
+                    if(count($parts) == 2){
+                        $subjectName = htmlspecialchars(trim($parts[0]));
+                        $subjectMark = htmlspecialchars(trim($parts[1]));?>
+                    <tr>
+                        <td><?= $subjectName ?></td> 
+                        <td><?= $subjectMark ?></td>
+                    </tr>
             <?php
                 }
+                }
             ?>
+            </table>
+            <?php } ?>
             </div>
         </div>
     </section>

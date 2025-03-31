@@ -72,3 +72,24 @@ body {
     font-size: 64px;
     text-align: center;
 }
+/* Designing table   */
+.marks-table {
+    min-width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.marks-table th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.marks-table th {
+    background: #007bff;
+    color: white;
+}
+.marks-table tr:hover {
+    background: #f1f1f1;
+}
+
