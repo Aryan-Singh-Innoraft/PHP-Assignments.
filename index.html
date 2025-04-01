@@ -13,7 +13,7 @@
         <div class="container">
             <div class="form-wrapper">
                 <div class="form-container">
-                    <form action="welcome.php" class="form" method="post" enctype="multipart/form-data">
+                    <form action="welcome.php" method="post" class="form"  onsubmit="validateForm(event)" enctype="multipart/form-data">
                         <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstname" placeholder="First Name"
                             oninput="updateFullName()">
@@ -27,7 +27,12 @@
                         <input type="file" name="imageToUpload" id="imageToUpload">
                         <textarea id="marksField" name="marksField" rows="4" cols="50"
                         placeholder="Enter marks"></textarea>
-                        <input type="submit" class="submit-button" onclick="validateForm(event)" name="submit">
+                        <div class = "phoneNumber">
+                            <input type="text" value="+91" readonly class="phonePrefix" name="phonePrefix">
+                            <input type="text" placeholder="Mobile no." name="phoneField" id="phoneField" >
+                        </div>
+                        <p id = "phoneNumberError"></p>
+                        <input type="submit" class="submit-button" name="submit">
                     </form>
                 </div>
             </div>
@@ -35,5 +40,5 @@
     </section>
 
 </body>
-<script src="index.js"></script>
+<script src="./JS/index.js"></script>
 </html>

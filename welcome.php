@@ -70,6 +70,8 @@
                 }
             ?>
             </table>
+            <?php $phoneNumber = htmlspecialchars($_POST["phoneField"]); ?>
+            <h2>Phone number: (+91)<?= $phoneNumber ?></h2>
             <?php } ?>
             </div>
         </div>

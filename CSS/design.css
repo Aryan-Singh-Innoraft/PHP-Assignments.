@@ -92,4 +92,17 @@ body {
 .marks-table tr:hover {
     background: #f1f1f1;
 }
+/* Form phoneNumber field styling */
+.phoneNumber {
+    display: flex;
+}
+.form .phonePrefix {
+    max-width: 12%;
+    outline: 0;
+    border-right: 0;
+}
+#phoneField {
+    min-width: 88%;
+}
+
 
