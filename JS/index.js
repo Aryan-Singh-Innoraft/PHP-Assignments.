@@ -60,3 +60,6 @@ function validateForm(event) {
         event.preventDefault();
     }
 }
+function handleDownload() {
+    window.location.href = "download.php";
+}

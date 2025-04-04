@@ -11,6 +11,13 @@
         <div class="container">
             <div class="welcome-wrapper">
             <?php
+              require __DIR__ . '/vendor/autoload.php';
+
+              use PhpOffice\PhpWord\PhpWord;
+              use PhpOffice\PhpWord\IOFactory;
+                              
+                ?>
+            <?php
             $target_dir="upload/";
             $target_file=$target_dir . basename($_FILES["imageToUpload"] ["name"]);
             $uploadOk=1;
@@ -73,29 +80,29 @@
             <?php $phoneNumber = htmlspecialchars($_POST["phoneField"]); ?>
             <h2 class="phone-display">Phone number: (+91)<?= $phoneNumber ?></h2>
             <?php
-                require_once 'vendor/autoload.php';  // Load autoload if using Composer
+                // require_once 'vendor/autoload.php';  // Load autoload if using Composer
 
-                // Load environment variables from .env file
+                // // Load environment variables from .env file
               
-                $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-                var_dump($dotenv) ;
-                $dotenv->load();
+                // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+                // var_dump($dotenv) ;
+                // $dotenv->load();
                 
                 // Get the API key from the environment variables
-                $apiKey = getenv('API_KEY'); 
-                if (is_readable('.env')) {
-                    echo ".env file is readable.";
-                } else {
-                    echo ".env file is NOT readable.";
-                }
-                if (getenv('API_KEY') === false) {
-                    echo "API_KEY is not loaded correctly from the .env file.";
-                } else {
-                    echo "API_KEY loaded successfully: " . getenv('API_KEY');
-                }
+                // $apiKey = getenv('API_KEY'); 
+                // if (is_readable('.env')) {
+                //     echo ".env file is readable.";
+                // } else {
+                //     echo ".env file is NOT readable.";
+                // }
+                // if (getenv('API_KEY') === false) {
+                //     echo "API_KEY is not loaded correctly from the .env file.";
+                // } else {
+                //     echo "API_KEY loaded successfully: " . getenv('API_KEY');
+                // }
 
                 // Set API Key and Email
-                // $apiKey = '03aec3cd90b5d907d8dd2516a6031a3c'; 
+                $apiKey = '03aec3cd90b5d907d8dd2516a6031a3c'; 
                 $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : '';
                 if (empty($email)) {
                     die("Email is required.");
@@ -121,7 +128,7 @@
                     curl_close($ch);
                     // Decode JSON response
                     $data = json_decode($response, true);
-                    echo $data['format_valid'];
+                    
                     // Print validation result
                     if ($data['format_valid'] == true && $data['smtp_check'] === true) {
                         ?>
@@ -134,9 +141,64 @@
                     echo "Error: " . $e->getMessage();
                 }
                 ?>
-                <?php } ?>
+                <!-- Code for generating doc  -->
+            <?php 
+
+            // Define file name
+            $filename = 'User_Submission_' . time() . '.docx';
+            $filePath = __DIR__ . '/saved_docs/' . $filename;
+
+            // Create a new Word document
+            $phpWord = new PhpWord();
+            $section = $phpWord->addSection();
+
+            // Add content to the document
+            $section->addText('User Submission', ['bold' => true, 'size' => 24]);
+            $section->addTextBreak();
+            $section->addTextBreak(1);
+            $section->addText("Name:" . $firstName ." ". $lastName , ['size'=>18]);
+            $section->addText("Email:" . $email , ['size'=>18]);
+            $section->addText("Phone:" . $phoneNumber , ['size'=>18]);
+            $section->addTextBreak(1);
+
+            if (!empty($linesOfMarks)) {
+             $section->addText("Marks details:",['bold'=>true,'size'=>24]);
+             $section->addTextBreak();
+             $table=$section->addTable(); 
+             $table->addRow();
+             $table-> addCell(4000, ['bgColor'=>'#007bff','borderSize' => 1, 'borderColor' => '#007bff'])->addText("Subject",['bold'=>true , 'size'=>18]);
+             $table-> addCell(2000, ['bgColor'=>'#007bff','borderSize' => 1, 'borderColor' => '#007bff'])->addText("Marks",['bold'=>true , 'size'=>18]);
+             foreach($linesOfMarks as $marks){
+                $mark = explode("|",$marks);
+                $table->addRow();
+                $table->addCell(4000,['borderSize' => 1, 'borderColor' => '000000'])->addText($mark[0],['size'=>18]);
+                $table->addCell(2000,['borderSize' => 1, 'borderColor' => '000000'])->addText($mark[1],['size'=>18]);
+             }
+             $section->addTextBreak();
+            }
+            // Add image to the doc 
+            if(!empty($target_file) && file_exists($target_file)){
+                $section->addText("Uploaded Image:" , ['bold' => true, 'size' => 24]);
+                $section->addTextBreak();
+                $section->addImage($target_file,['width' => 200, 'height' => 200, 'alignment' => 'center']);
+                $section->addTextBreak();
+            }
+            // Save a copy on the server
+            $wordWriter = IOFactory::createWriter($phpWord, 'Word2007');
+            $wordWriter->save($filePath);
+        
+        
+            ?>
+            <!-- <a href = "<?= $filePath ?>" download>Download your doc. file.</a> -->
+            <form method="POST" action="download.php">
+                <input type="hidden" name="filename" value="<?= $filename ?>">
+                <button type="submit" class="download-btn">Download Document</button>
+            </form>
+          
+            <?php } ?>
             </div>
         </div>
     </section>
 </body>
+<script src="./JS/index.js"></script>
 </html>
