@@ -8,8 +8,29 @@
     margin: 0 auto;
 }
 body {
-    background-color: rgba(192, 192, 192, 0.185);
+    font-family: "Roboto", sans-serif;
+    background-color: rgb(53, 53, 121);
 }
+/* Navbar styling  */
+.navbar {
+    background-color: white;
+}
+.navbar-wrapper{
+    display: flex;
+    justify-content: end;
+}
+.logout-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgb(53, 53, 121);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 15px 0;
+}
+/* Form styling  */
 .welcome-wrapper {
     display: flex;
     flex-direction: column;
@@ -50,18 +71,18 @@ body {
     background-color: white;
 }
 .form .submit-button {
-    background-color: rgb(0, 217, 255);
+    background-color: rgb(53, 53, 121);
     border: none;
-    padding: 10px 50px;
-    margin: 10px auto;
+    padding: 10px 0;
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1px;
+    color: white;
 }
 .form p {
     color: red;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .uploaded-image {
     max-width: 400px;
@@ -104,5 +125,3 @@ body {
 #phoneField {
     min-width: 88%;
 }
-
-
