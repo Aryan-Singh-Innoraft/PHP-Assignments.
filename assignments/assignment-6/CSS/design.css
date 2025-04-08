@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+body {
+    font-family: "Roboto", sans-serif;
+}
+/* Navbar styling  */
+.navbar {
+    background-color: white;
+}
+.navbar-wrapper{
+    display: flex;
+    justify-content: end;
+}
+.logout-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgb(53, 53, 121);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 15px 0;
+}
+/* Form styling  */
+.form-section {
+    background-color: rgb(53, 53, 121);
+}
+.welcome-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.form label {
+    font-size: 18px;
+}
+.form input {
+    margin: 10px 0 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid black;
+}
+#marksField{
+    margin: 10px 0 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid black;
+}
+.form-wrapper{
+    padding: 40px 0;
+}
+.form-container {
+    max-width: 600px;
+    min-height: 300px;
+    box-shadow:2px 2px 2px rgba(82, 80, 80,0.5);
+    padding: 20px ;
+    margin: 30px auto;
+    background-color: white;
+}
+.form .submit-button {
+    background-color: rgb(53, 53, 121);
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: white;
+}
+.form p {
+    color: red;
+    margin-bottom: 20px;
+}
+.uploaded-image {
+    max-width: 400px;
+    margin: 10px auto;
+}
+.heading {
+    margin-top: 20px;
+    font-size: 64px;
+    text-align: center;
+}
+/* Designing table   */
+.marks-table {
+    min-width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.marks-table th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.marks-table th {
+    background: #007bff;
+    color: white;
+}
+.marks-table tr:hover {
+    background: #f1f1f1;
+}
+/* Form phoneNumber field styling */
+.phoneNumber {
+    display: flex;
+}
+.form .phonePrefix {
+    max-width: 12%;
+    outline: 0;
+    border-right: 0;
+}
+#phoneField {
+    min-width: 88%;
+}
+/* Email */
+.email-display ,.phone-display {
+    margin: 20px 0;
+    font-size: 30px;
+}
+/* Download button  */
+.download-btn {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-size: 20px;
+}
+
+
