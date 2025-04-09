@@ -1,3 +1,4 @@
+<?php include "../../auth.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <title>Welcome Page</title>
 </head>
 <body>
+    <?php include '../../navbar.php' ?>
     <section class="welcome-page">
         <div class="container">
             <div class="welcome-wrapper">

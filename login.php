@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/login.css">
-    <title>Login page</title>
-</head>
-<body>
-<?php 
+<?php
     session_start();
   
+    header('Content-Type: application/json');
     $validUserName = "Aryan";
     $validPassword = "100";
 
@@ -17,44 +9,46 @@
         $userName = $_POST["userName"];
         $password = $_POST["password"];
         $errorMessageUsername = "";
-        $errorMessagePassword = "";
+        $errorMessagePassword = ""; 
         
+        // Response that would be sent in frontend 
+        $response = [
+            "success" => false,
+            "errors" => [
+                "username" => "",
+                "password" => ""
+            ]
+        ];
 
-        if($userName === $validUserName && $password === $validPassword) {
-            $_SESSION["username"] = $userName;
-            header("Location: http://formaryan.com/assignments/assignment-4/");
-            exit();
+        if($userName === "") {
+            $errorMessageUsername = "Username required";
         }
-        if ($userName !== $validUserName ){
-            $errorMessageUsername = "Wrong username";
+        if($password === "") {
+            $errorMessagePassword = "Password required";
         }
-        if ($password !== $validPassword ){
-            $errorMessagePassword = "Wrong password";
+
+        if($errorMessageUsername === "" && $errorMessagePassword === ""){
+            if($userName === $validUserName && $password === $validPassword) {
+                $_SESSION["username"] = $userName;
+                $response["success"] = true;
+                echo json_encode($response);
+                exit();
+            }
+            else {
+                if($userName !== $validUserName){
+                    $errorMessageUsername = "Wrong username";
+                }
+                if($password !== $validPassword ){
+                    $errorMessagePassword = "Wrong password";
+                }
+            }
         }
-        else {
-            $errorMessageUsername = "Wrong username";
-            $errorMessagePassword = "Wrong password";
-        }
+        
+        // Return error message as response 
+        $response["errors"]["username"] = $errorMessageUsername;
+        $response["errors"]["password"] = $errorMessagePassword;
+        echo json_encode($response);
+        exit;
     }
     ?>
-    <main>
-        <section class="login-form-page">
-            <div class="container">
-                <div class="login-form">
-                    <form action="" class="form" method = "POST" enctype = "multipart/formdata">
-                        <h2>Login</h2>
-                        <label for="userName">User-name:</label>
-                        <input type="text" placeholder="Username" id="userName" name="userName">
-                        <p><?= $errorMessageUsername ?></p>
-                        <label for="password">Password:</label>
-                        <input type="password" placeholder="Password" id="password" name="password">
-                        <p><?= $errorMessagePassword ?></p>
-                        <button class="login-btn">Login</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-</body>
-</html>
+   

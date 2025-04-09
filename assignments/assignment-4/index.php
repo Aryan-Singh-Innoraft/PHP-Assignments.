@@ -10,28 +10,20 @@
 </head>
 
 <body>
-    <header>
-        <div class="navbar">
-            <div class="container">
-                <div class="navbar-wrapper">
-                    <a href="../../logout.php" class="logout-btn">Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php include '../../navbar.php';?>
     <main>
     <section class="form-section">
         <div class="container">
             <div class="form-wrapper">
                 <div class="form-container">
-                    <form action="welcome.php" method="post" class="form"  onsubmit="return validateForm(event)" enctype="multipart/form-data">
-                        <label for="firstName">First Name</label>
+                    <form action="welcome.php" method="post" class="form"  onsubmit="return validateForm()" enctype="multipart/form-data">
+                    <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstname" placeholder="First Name"
-                            oninput="updateFullName()">
+                            oninput="updateFullName(); validateName('firstName');">
                         <p id="firstNameError"></p>
                         <label for="lastName">Last Name</label>
                         <input type="text" id="lastName" name="lastname" placeholder="Last Name"
-                            oninput="updateFullName()">
+                            oninput="updateFullName(); validateName('lastName');">
                         <p id="lastNameError"></p>
                         <label for="fullName">Full Name</label>
                         <input type="text" id="fullName" placeholder="Full Name" name="fullname" disabled>
@@ -43,7 +35,6 @@
                         <div class = "phoneNumber">
                             <input type="text" value="+91" readonly class="phonePrefix" name="phonePrefix">
                             <input type="text" placeholder="Mobile no." name="phoneField" id="phoneField" >
-                            <p id="phoneErrorMessage"></p>
                         </div>
                         <p id = "phoneNumberError"></p>
                         <input type="submit" class="submit-button" name="submit">

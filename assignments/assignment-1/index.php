@@ -1,4 +1,4 @@
-<?php include "../../auth.php"; ?>
+<?php include "auth.php";?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,15 +10,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="navbar">
-            <div class="container">
-                <div class="navbar-wrapper">
-                    <a href = "../../logout.php" class="logout-btn">Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
+   <?php include '../../navbar.php' ?>
     <main>
         <section class="form-section">
             <div class="container">

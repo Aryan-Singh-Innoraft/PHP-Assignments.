@@ -27,12 +27,18 @@
             exit;
         }
     }
+    else {
+        if(isset($_GET["q"])) {
+            header("Location: /login-form.php");
+            exit;
+        }
+    }
     ?>
     <header>
         <div class="navbar">
             <div class="container">
                 <div class="navbar-wrapper">
-                    <a href="login.php" class="login-btn">Login</a>
+                    <a href="/login-form.php" class="login-btn">Login</a>
                 </div>
             </div>
         </div>

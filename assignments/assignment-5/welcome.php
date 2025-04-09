@@ -1,3 +1,4 @@
+<?php include "../../auth.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <title>Welcome Page</title>
 </head>
 <body>
+    <?php include '../../navbar.php' ?>
     <section class="welcome-page">
         <div class="container">
             <div class="welcome-wrapper">
@@ -95,7 +97,7 @@
                 }
 
                 // Set API Key and Email
-                // $apiKey = '03aec3cd90b5d907d8dd2516a6031a3c'; 
+                $apiKey = '03aec3cd90b5d907d8dd2516a6031a3c'; 
                 $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : '';
                 if (empty($email)) {
                     die("Email is required.");
@@ -121,7 +123,7 @@
                     curl_close($ch);
                     // Decode JSON response
                     $data = json_decode($response, true);
-                    echo $data['format_valid'];
+                    
                     // Print validation result
                     if ($data['format_valid'] == true && $data['smtp_check'] === true) {
                         ?>

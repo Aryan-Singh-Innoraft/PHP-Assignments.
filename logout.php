@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: http://formaryan.com/login.php"); 
+header("Location: /login-form.php"); 
 exit();
 ?>
