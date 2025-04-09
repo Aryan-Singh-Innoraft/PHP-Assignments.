@@ -113,16 +113,17 @@ function validateNumber() {
      // Regex for exactly 10 digits
      let regexPhone = /^\d{10}$/;
      let validNumber = true;
-     if(/^[A-Za-z]+$/.test(phoneNumber)) {
-        phoneNumberError.textContent = "Phone number should have only digits.";
-         validNumber = false;
-     }
+    
      if (!regexPhone.test(phoneNumber)) {
          phoneNumberError.textContent = "Phone number should be exactly 10 digits.";
          validNumber = false;
      }
+     if(/[A-Za-z]/.test(phoneNumber)) {
+        phoneNumberError.textContent = "Phone number should have only digits.";
+         validNumber = false;
+     }
      if(phoneNumber == ""){
-         phoneNumberError.textContent = "Phonenumber should not be empty."
+         phoneNumberError.textContent = "Phone number should not be empty."
          validNumber = false;
      }
      return validNumber;
