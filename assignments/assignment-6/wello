@@ -1,0 +1,186 @@
+<?php
+include "email.php";
+// Autoload dependencies.
+require __DIR__ . '/../../vendor/autoload.php';
+//Using package.
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+/**
+ * Form handler class.
+ */
+class FormHandler {
+  /**
+   * @var string upload directory for image.
+   */
+  private $uploadDir = "upload/";
+  /**
+   * @var string submission folder where the where the doc file is stored.
+   */
+  private $submissionDir = "submissions/";
+  /**
+   * @var string full name of user.
+   */
+  public $fullName;
+  /**
+   * @var int phone number of user.
+   */
+  public $phone;
+  /**
+   * @var mixed for storing the email of user.
+   */
+  public $email;
+  /**
+   * @var array store the marks of the user.
+   */
+  public $marks_array = [];
+  /**
+   * @var mixed path of the doc file where the form is stored after submission.
+   */
+  public $filePath;
+  /**
+   * take input from the user and clean the unnecessary things.
+   * @param mixed $input
+   * @return mixed $input
+   */
+  public function sanitizeInput(mixed $input) {
+    return htmlspecialchars(trim($input));
+  }
+  /**
+   * move the image to the upload directory.
+   * @param array $file the uploaded file of image
+   * @return string $target_file the path to the uploaded image or an empty string on failure
+   */
+  public function handleImageUpload(array $file) {
+    if (!isset($file) || $file["error"] !== 0) {
+      echo "No file uploaded or file upload error!";
+      return "";
+    }
+    if (!is_dir($this->uploadDir)) {
+      mkdir($this->uploadDir, 0777, true);
+    }
+    $target_file = $this->uploadDir . basename($file["name"]);
+    if (move_uploaded_file($file["tmp_name"], $target_file)) {
+      echo "<img class='uploadedImg' src='$target_file' alt='Uploaded Image'>";
+      return $target_file;
+    } else {
+      echo "Error moving uploaded file! Check folder permissions.<br>";
+      return "";
+    }
+  }
+  /**
+   * make a marks array to store marks.
+   * @param string $marks_input Format: subject|marks (e.g., "Maths|78")
+   * @return array of marks and subject
+   */
+  public function parseMarks(string $marks_input) {
+    $marks_array = [];
+    $marks_lines = preg_split("/\r\n|\n|\r/", trim($marks_input));
+    foreach ($marks_lines as $line) {
+      $subject_marks = explode("|", trim($line));
+      if (count($subject_marks) === 2) {
+        $subject = htmlspecialchars(trim($subject_marks[0]));
+        $marks = htmlspecialchars(trim($subject_marks[1]));
+        $marks_array[$subject] = $marks;
+      }
+    }
+    return $marks_array;
+  }
+  /**
+   * generate and store the result after submission.
+   * @param string $image_path contain the image path where the image is stored
+   * @return string $file_name the path of the file where the doc file is stored.
+   */
+  public function generateAndStoreDoc($image_path = '') {
+    if (!is_dir($this->submissionDir)) {
+      mkdir($this->submissionDir, 0777, true);
+    }
+    $file_name = $this->submissionDir . time() . "_User_Details.docx";
+    $phpWord = new PhpWord();
+    $section = $phpWord->addSection();
+    $section->addText("User Submission Details", ['bold' => true, 'size' => 16, 'underline' => 'single']);
+    $section->addTextBreak(1);
+    $section->addText("Full Name: " . $this->fullName, ['size' => 12]);
+    $section->addText("Phone: " . $this->phone, ['size' => 12]);
+    $section->addText("Email: " . $this->email, ['size' => 12]);
+    $section->addTextBreak(1);
+    if (!empty($this->marks_array)) {
+      $section->addText("Marks Details:", ['bold' => true, 'size' => 14]);
+      $table = $section->addTable();
+      $table->addRow();
+      $table->addCell(4000, ['bgColor' => 'cccccc'])->addText("Subject", ['bold' => true]);
+      $table->addCell(2000, ['bgColor' => 'cccccc'])->addText("Marks", ['bold' => true]);
+      foreach ($this->marks_array as $subject => $score) {
+        $table->addRow();
+        $table->addCell(4000)->addText($subject);
+        $table->addCell(2000)->addText($score);
+      }
+      $section->addTextBreak(1);
+    }
+    if (!empty($image_path) && file_exists($image_path)) {
+      $section->addText("Uploaded Image:");
+      $section->addImage($image_path, ['width' => 150, 'height' => 150, 'alignment' => 'center']);
+      $section->addTextBreak(1);
+    }
+    $obj_writer = IOFactory::createWriter($phpWord, 'Word2007');
+    $obj_writer->save($file_name);
+    return $file_name;
+  }
+  /**
+   * handle form submission.
+   */
+  public function handleFormSubmission() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $this->fullName = $this->sanitizeInput($_POST["fullName"] ?? "");
+      $this->phone = $this->sanitizeInput($_POST["phone"] ?? "");
+      $this->email = $this->sanitizeInput($_POST["email"] ?? "");
+      $this->marks_array = $this->parseMarks($_POST["addMarks"] ?? "");
+      $image_path = $this->handleImageUpload($_FILES["chooseImg"] ?? []);
+      $this->filePath = $this->generateAndStoreDoc($image_path);
+    }
+  }
+}
+// object creation.
+$formHandler = new FormHandler();
+$formHandler->handleFormSubmission();
+$validator = new EmailValidator();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Output</title>
+  <link rel="stylesheet" href="CSS/index.css" />
+  <link rel="stylesheet" href="/PHP-Assignment-New/Login/CSS/style.css" />
+</head>
+<body>
+  <?php include '../Login/navbar.php'; ?>
+  <div class="container">
+    <h2>Hello <?php echo $formHandler->fullName; ?></h2>
+    <h3>Submitted Marks</h3>
+    <table border="1">
+      <tr>
+        <th>Subject</th>
+        <th>Marks</th>
+      </tr>
+      <?php foreach ($formHandler->marks_array as $subject => $marks): ?>
+        <tr>
+          <td><?php echo htmlspecialchars($subject); ?></td>
+          <td><?php echo htmlspecialchars($marks); ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+    <p>Phone Number: +91<?php echo $formHandler->phone; ?></p>
+    <p>
+      <?php
+      if ($validator->validate($formHandler->email)) {
+        echo "Email is valid: {$formHandler->email}<br>";
+      } else {
+        echo "Invalid email address. Please enter a valid email.";
+      }
+      ?>
+    </p>
+    <p>Document saved successfully: <a href='<?php echo $formHandler->filePath; ?>' download>Download Here</a></p>
+  </div>
+</body>
+</html>

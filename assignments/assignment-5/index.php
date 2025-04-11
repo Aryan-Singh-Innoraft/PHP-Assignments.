@@ -1,7 +1,6 @@
 <?php include "../../auth.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +15,7 @@
         <div class="container">
             <div class="form-wrapper">
                 <div class="form-container">
-                    <form action="welcome.php" method="post" class="form"  onsubmit="return validateForm()" enctype="multipart/form-data">
+                <form action="welcome.php"  method="post" class="form"  onsubmit="return validateForm(event)" enctype="multipart/form-data" id="email-form">
                     <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstname" placeholder="First Name"
                             oninput="updateFullName(); validateName('firstName');">
@@ -45,8 +44,9 @@
             </div>
         </div>
     </section>
-    </main>
-
+</main>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./JS/index.js"></script>
+
 </html>

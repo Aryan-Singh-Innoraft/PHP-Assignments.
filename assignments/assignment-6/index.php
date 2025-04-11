@@ -15,7 +15,7 @@
         <div class="container">
             <div class="form-wrapper">
                 <div class="form-container">
-                <form action="welcome.php" method="post" class="form"  onsubmit="return validateForm()" enctype="multipart/form-data" id="email-form">
+                <form action="welcome.php"  method="post" class="form"  onsubmit="return validateForm(event)" enctype="multipart/form-data" id="email-form">
                     <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstname" placeholder="First Name"
                             oninput="updateFullName(); validateName('firstName');">
