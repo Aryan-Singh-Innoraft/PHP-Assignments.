@@ -33,12 +33,6 @@ body {
 .form-section {
     background-color: rgb(53, 53, 121);
 }
-.welcome-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 .form {
     display: flex;
     flex-direction: column;
@@ -52,7 +46,7 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     outline: none;
-    border: 1px solid black;
+    border: 1px solid rgb(53, 53, 121);
 }
 #marksField{
     margin: 10px 0 10px 0;
@@ -84,48 +78,22 @@ body {
 }
 .form p {
     color: red;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .uploaded-image {
-    max-width: 400px;
-    margin: 10px auto;
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
 }
 .heading {
     margin-top: 20px;
     font-size: 64px;
     text-align: center;
 }
-/* Designing table   */
-.marks-table {
-    min-width: 50%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.marks-table th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-.marks-table th {
-    background: #007bff;
-    color: white;
-}
-.marks-table tr:hover {
-    background: #f1f1f1;
-}
-/* Form phoneNumber field styling */
-.phoneNumber {
+.welcome-wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-.form .phonePrefix {
-    max-width: 12%;
-    outline: 0;
-    border-right: 0;
-}
-#phoneField {
-    min-width: 88%;
-}
-
-

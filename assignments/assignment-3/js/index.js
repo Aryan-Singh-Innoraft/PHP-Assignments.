@@ -74,60 +74,61 @@ function validateFile() {
     return imageUploaded;
 }
 function validateMarks() {
-    let marks = document.getElementById("marksField").value;
-    let marksErrorMessage = document.getElementById("marksErrorMessage");
-    let validMarks = true;
-    let subjectRegex = /^[A-Za-z]+$/;
-    let marksRegex = /^[0-9]+(\.[0-9]+)?$/;//supports decimal numbers
-    marksErrorMessage.textContent = "";
-    let marksArray = marks.split("\n");
-    if(marks == "") {
-        marksErrorMessage.textContent = "Marks field cannot be empty.";
-        return false;
-    }
-    marksArray.forEach((marks) => {
-        let singleMarks = marks.split("|");
-        if(!subjectRegex.test(singleMarks[0])) { 
-            marksErrorMessage.textContent = "Subject name should have only alphabets.";
-            validMarks = false;
-        }
-        if(!marksRegex.test(singleMarks[1])) {
-            marksErrorMessage.textContent = "Subject marks should have only digits.";
-            validMarks = false;
-        }
-        if(!subjectRegex.test(singleMarks[0]) && !marksRegex.test(singleMarks[1])) {
-            marksErrorMessage.textContent = "Follow the pattern (English|85)";
-            validMarks = false;
-        }
-        if(singleMarks.length > 2) {
-            marksErrorMessage.textContent = "Marks needs to be entered in the pattern (eg:English|85)all in new line.";
-            validMarks = false;
-        }
-    });
-    return validMarks;
-}
-function validateNumber() {
-    let phoneNumber = document.getElementById("phoneField").value.trim();
-    let phoneNumberError = document.getElementById("phoneNumberError");
-    phoneNumberError.textContent = "";
-     // Regex for exactly 10 digits
-     let regexPhone = /^\d{10}$/;
-     let validNumber = true;
-    
-     if (!regexPhone.test(phoneNumber)) {
-         phoneNumberError.textContent = "Phone number should be exactly 10 digits.";
-         validNumber = false;
-     }
-     if(/[A-Za-z]/.test(phoneNumber)) {
-        phoneNumberError.textContent = "Phone number should have only digits.";
-         validNumber = false;
-     }
-     if(phoneNumber == ""){
-         phoneNumberError.textContent = "Phone number should not be empty."
-         validNumber = false;
-     }
-     return validNumber;
-      
+  let marks = document.getElementById("marksField").value;
+  let marksErrorMessage = document.getElementById("marksErrorMessage");
+  let validMarks = true;
+  let subjectRegex = /^[A-Za-z ]+$/;
+  let marksRegex = /^\s*[0-9]+(\.[0-9]+)?\s*$/;
+  marksErrorMessage.textContent = "";
+  let marksArray = marks.split("\n");
+  if (marks == "") {
+      marksErrorMessage.textContent = "Marks field cannot be empty.";
+      return false;
+  }
+  for(let i = 0; i < marksArray.length    ; i++) {
+      marksErrorMessage.textContent = "";
+      marks = marksArray[i].trim();
+      console.log("i am blank");
+      if(marks == "") {
+          marksErrorMessage.textContent = "No empty lines.";
+          validMarks = false;
+          break;
+      }
+      let singleMarks = marks.split("|");
+      if(singleMarks.length < 2){
+          marksErrorMessage.textContent = "Enter subject and marks both.";
+          validMarks = false;
+          break;
+      }       
+      else if(singleMarks.length > 2) {
+          marksErrorMessage.textContent = "Marks needs to be entered in the pattern (eg:English|85) all in new line.";
+          validMarks = false;
+          console.log("I am printed")
+          break;
+      }
+      else if (!subjectRegex.test(singleMarks[0])) {
+          marksErrorMessage.textContent = "Subject name should have only alphabets.";
+          validMarks = false;
+          console.log("I am printed")
+          break;
+      }
+      else if (!marksRegex.test(singleMarks[1])) {
+          marksErrorMessage.textContent = "Subject marks should have only digits.";
+          validMarks = false;
+          break;
+      }
+      else if(singleMarks[1] > 100) {
+          marksErrorMessage.textContent = "Enter marks below 100.";
+          validMarks = false;
+          break;  
+      }
+      else if (!subjectRegex.test(singleMarks[0]) && !marksRegex.test(singleMarks[1])) {
+          marksErrorMessage.textContent = "Follow the pattern (English|85)";
+          validMarks = false;
+          break;
+      }
+  }
+  return validMarks;
 }
 function notEmpty() {
     let firstName = document.getElementById("firstName").value;
@@ -149,13 +150,11 @@ function validateForm() {
     let isValid = validateName("both");
     let imageUploaded = validateFile();
     let validMarks = validateMarks();
-    let validNumber = validateNumber();
     let notNull = notEmpty();
-    if(isValid == false || notNull == false || imageUploaded == false || validMarks == false ||validNumber ==false) {
+    if(isValid == false || notNull == false || imageUploaded == false || validMarks == false) {
         return false;
     }
     else {
         return true;
     }
 }
-

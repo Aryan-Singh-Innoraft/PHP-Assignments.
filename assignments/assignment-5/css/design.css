@@ -87,8 +87,10 @@ body {
     margin-bottom: 20px;
 }
 .uploaded-image {
-    max-width: 400px;
-    margin: 10px auto;
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
 }
 .heading {
     margin-top: 20px;
