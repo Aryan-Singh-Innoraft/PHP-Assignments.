@@ -266,54 +266,54 @@ function notEmpty() {
     return notNull;
 }
 
-/**
- * Validates the entire form.
- * 
- * @param {*} event
- *   Takes event as parameter.
- * 
- * @returns boolean 
- *   Returns boolean value to the form after validation.
- */
-async function validateForm(event) {
-    if(event)event.preventDefault();
-    let isValid = validateName("both");
-    console.log(isValid);
-    let imageUploaded = validateFile();
-    let validMarks = validateMarks();
-    let validNumber = validateNumber();
-    let notNull = notEmpty();
-    let validEmailSyntax = validateEmailSyntax();
-    let validEmail = true;
-    if(validEmailSyntax === true) {
-        try{
-            // Wait for the AJAX to finish
-            var response = await validateEmail(); 
-            let emailError = document.getElementById("emailError");
-            if (response === true) {
-                console.log(response);
-                validEmail = true;
-            } else {
-                emailError.textContent = "Invalid email";
-                validEmail = false;
-            }
-        } catch (error) {
-            console.error("AJAX Error:", error);
-            emailError.textContent = "Server error";
-            validEmail = false;
-        }
+  /**
+   * Validates the entire form.
+   * 
+   * @param {*} event
+   *   Takes event as parameter.
+   * 
+   * @returns boolean 
+   *   Returns boolean value to the form after validation.
+   */
+  async function validateForm(event) {
+      if(event)event.preventDefault();
+      let isValid = validateName("both");
+      console.log(isValid);
+      let imageUploaded = validateFile();
+      let validMarks = validateMarks();
+      let validNumber = validateNumber();
+      let notNull = notEmpty();
+      let validEmailSyntax = validateEmailSyntax();
+      let validEmail = true;
+      if(validEmailSyntax === true) {
+          try{
+              // Wait for the AJAX to finish
+              var response = await validateEmail(); 
+              let emailError = document.getElementById("emailError");
+              if (response === true) {
+                  console.log(response);
+                  validEmail = true;
+              } else {
+                  emailError.textContent = "Invalid email";
+                  validEmail = false;
+              }
+          } catch (error) {
+              console.error("AJAX Error:", error);
+              emailError.textContent = "Server error";
+              validEmail = false;
+          }
+      }
+      if (response == true && notNull ==true && validEmail == true && validEmailSyntax == true && isValid == true && imageUploaded == true && validMarks == true && validNumber == true) {
+          console.log("htrue");
+          console.log(":white_check_mark: All validations passed");
+          const form = document.getElementById("email-form");
+          const submitInput = form.querySelector('[name="submit"]');
+          if (submitInput) {
+          submitInput.removeAttribute("name");
+          }
+          form.submit();
+      }
+      else {
+          return false;
+      }
     }
-    if (response == true && notNull ==true && validEmail == true && validEmailSyntax == true && isValid == true && imageUploaded == true && validMarks == true && validNumber == true) {
-        console.log("htrue");
-        console.log(":white_check_mark: All validations passed");
-        const form = document.getElementById("email-form");
-        const submitInput = form.querySelector('[name="submit"]');
-        if (submitInput) {
-        submitInput.removeAttribute("name");
-        }
-        form.submit();
-     }
-     else {
-        return false;
-     }
-  }

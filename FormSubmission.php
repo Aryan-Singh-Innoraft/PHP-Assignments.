@@ -187,7 +187,15 @@ class FormSubmission {
     $word_writer->save($file_path);
     return $file_path;
   }
-
+/**
+ * Checks email validity using mailboxlayer api.
+ * 
+ * @param string $email
+ *   Takes user mail-id as a parameter.
+ * 
+ * @return array
+ *   Returns an array of response.
+ */
   function emailValidate($email){
     header('Content-Type: application/json'); 
     // Construct API URL
