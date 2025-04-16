@@ -1,0 +1,18 @@
+{
+    "name": "innoraft/php-assignments",
+    "autoload": {
+        "psr-4": {
+            "Innoraft\\PhpAssignments\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aryan Singh",
+            "email": "aryan.singh@innoraft.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "phpoffice/phpword": "^1.3"
+    }
+}
