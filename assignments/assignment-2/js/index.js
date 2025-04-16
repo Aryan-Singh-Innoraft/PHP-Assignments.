@@ -1,9 +1,21 @@
-//Fetching firstname,lastname and displaying fullname. 
+/**
+ * Fetching firstname,lastname and displaying fullname.
+ */
 function updateFullName() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     document.getElementById("fullName").value = firstName + " " + lastName;
 }
+
+/**
+ * Performs both firstname,lastname validity.
+ * 
+ * @param string id 
+ *   This parameter determines which field needs to be validated.
+ *   
+ * @returns boolean
+ *   Returns boolean based on name validity.
+ */
 function validateName(id) {
     let firstName = document.getElementById("firstName").value.trim();
     let lastName = document.getElementById("lastName").value.trim();
@@ -62,6 +74,13 @@ function validateName(id) {
         return isValid;
     }
 }
+
+/**
+ * Performs image validation.
+ * 
+ * @returns boolean
+ *   Whether the file is uploaded or not.
+ */
 function validateFile() {
     let uploadedFile = document.getElementById("imageToUpload");
     let imageErrorMessage = document.getElementById("imageErrorMessage");
@@ -72,6 +91,13 @@ function validateFile() {
     }
     return imageUploaded;
 }
+
+/**
+ * Confirms that input value is not empty.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on validation.
+ */
 function notEmpty() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
@@ -88,6 +114,13 @@ function notEmpty() {
     }
     return notNull;
 }
+
+/**
+ * Validates the entire form.
+ * 
+ * @returns boolean 
+ *   Returns boolean value to the form after validation.
+ */
 function validateForm() {
     let isValid = validateName("both");
     let notNull = notEmpty();

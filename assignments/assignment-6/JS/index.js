@@ -1,10 +1,21 @@
-//Fetching firstname,lastname and displaying fullname.
-
+/**
+ * Fetching firstname,lastname and displaying fullname.
+ */
 function updateFullName() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     document.getElementById("fullName").value = firstName + " " + lastName;
 }
+
+/**
+ * Performs both firstname,lastname validity.
+ * 
+ * @param string id 
+ *   This parameter determines which field needs to be validated.
+ *   
+ * @returns boolean
+ *   Returns boolean based on name validity.
+ */
 function validateName(id) {
     let firstName = document.getElementById("firstName").value.trim();
     let lastName = document.getElementById("lastName").value.trim();
@@ -63,6 +74,13 @@ function validateName(id) {
         return isValid;
     }
 }
+
+/**
+ * Performs image validation.
+ * 
+ * @returns boolean
+ *   Whether the file is uploaded or not.
+ */
 function validateFile() {
     let uploadedFile = document.getElementById("imageToUpload");
     let imageErrorMessage = document.getElementById("imageErrorMessage");
@@ -74,6 +92,13 @@ function validateFile() {
     }
     return imageUploaded;
 }
+
+/**
+ * Performs validation of marks entered.
+ * 
+ * @returns boolean
+ *   Validates subject-name,marks and returns boolean value. 
+ */
 function validateMarks() {
     let marks = document.getElementById("marksField").value;
     let marksErrorMessage = document.getElementById("marksErrorMessage");
@@ -131,6 +156,13 @@ function validateMarks() {
     }
     return validMarks;
 }
+
+/**
+ * Perform phone number validation.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on number validation.
+ */
 function validateNumber() {
     let phoneNumber = document.getElementById("phoneField").value.trim();
     let phoneNumberError = document.getElementById("phoneNumberError");
@@ -155,6 +187,12 @@ function validateNumber() {
 
 }
 
+/**
+ * Performs syntax verification of email.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on number validation.
+ */
 function validateEmailSyntax() {
     // Validation for email 
     let validEmailSyntax = true;
@@ -174,6 +212,13 @@ function validateEmailSyntax() {
     }
     return validEmailSyntax;
 }
+
+/**
+ * Uses ajax for getting backend responses.
+ * 
+ * @returns boolean
+ *   Returns boolean based on email validity.
+ */
 async function validateEmail() {
     return new Promise(function (resolve, reject) {
         const emailJ = $('#email').val();
@@ -194,9 +239,16 @@ async function validateEmail() {
             error: function () {
                 reject("error");
             }
-        });
+    });
 }
 )}
+
+/**
+ * Confirms that input value is not empty.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on validation.
+ */
 function notEmpty() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
@@ -213,6 +265,16 @@ function notEmpty() {
     }
     return notNull;
 }
+
+/**
+ * Validates the entire form.
+ * 
+ * @param {*} event
+ *   Takes event as parameter.
+ * 
+ * @returns boolean 
+ *   Returns boolean value to the form after validation.
+ */
 async function validateForm(event) {
     if(event)event.preventDefault();
     let isValid = validateName("both");
@@ -223,10 +285,10 @@ async function validateForm(event) {
     let notNull = notEmpty();
     let validEmailSyntax = validateEmailSyntax();
     let validEmail = true;
-    // let response = await validateEmail();
-    if(validEmailSyntax === true){
+    if(validEmailSyntax === true) {
         try{
-            var response = await validateEmail(); // Wait for the AJAX to finish
+            // Wait for the AJAX to finish
+            var response = await validateEmail(); 
             let emailError = document.getElementById("emailError");
             if (response === true) {
                 console.log(response);
@@ -241,9 +303,7 @@ async function validateForm(event) {
             validEmail = false;
         }
     }
-          // let emailCheck = await validateEmail();
     if (response == true && notNull ==true && validEmail == true && validEmailSyntax == true && isValid == true && imageUploaded == true && validMarks == true && validNumber == true) {
-        // return false;
         console.log("htrue");
         console.log(":white_check_mark: All validations passed");
         const form = document.getElementById("email-form");
@@ -255,5 +315,5 @@ async function validateForm(event) {
      }
      else {
         return false;
-    }
-    }
+     }
+  }

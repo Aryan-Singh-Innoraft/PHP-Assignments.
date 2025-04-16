@@ -1,77 +1,20 @@
-// //Fetching firstname,lastname and displaying fullname. 
-// function updateFullName() {
-//     let firstname = document.getElementById("firstName").value;
-//     let lastname = document.getElementById("lastName").value;
-//     document.getElementById("fullName").value = firstname + " " + lastname;
-// }
-// function validateForm(event) {
-//     console.log("Validation function called."); // Debugging
-//     let firstname = document.getElementById("firstName").value.trim();
-//     let lastname = document.getElementById("lastName").value.trim();
-//     let phoneNumber = document.getElementById("phoneField").value.trim();
-//     let email = document.getElementById("email").value.trim();
-
-//     let regex = /^[A-Za-z ]+$/;
-//     let firstNameError = document.getElementById("firstNameError");
-//     let lastNameError = document.getElementById("lastNameError");
-//     let phoneNumberError = document.getElementById("phoneNumberError");
-
-//     firstNameError.textContent = "";
-//     lastNameError.textContent = "";
-//     phoneNumberError.textContent = "";
-//     emailError.textContent = "";
-//     let isvalid = true;
-//     // Validation for checking alphabets
-//     if(!regex.test(firstname)) {
-//         firstNameError.textContent = "Firstname can have only alphabets.";
-//         isvalid = false;
-//     }
-//     if(!regex.test(lastname)) {
-//         lastNameError.textContent = "Lastname can have only alphabets.";
-//         isvalid = false;
-//     }
-//     // Validation for empty fields.
-//     if(firstname == "") {
-//         firstNameError.textContent = "Firstname cannot be empty.";
-//         isvalid=false;
-//     }
-//     if(lastname == "") {
-//         lastNameError.textContent = "Lastname cannot be empty.";
-//         isvalid = false;
-//     }
-//     // Validation for phoneNumber
-//     let regexPhone = /^\d{10}$/;
-
-//     if (!regexPhone.test(phoneNumber)) {
-//         phoneNumberError.textContent = "Phone number should be exactly 10 digits between 0-9.";
-//         isvalid = false;
-//     }
-//     if(phoneNumber == ""){
-//         phoneNumberError.textContent = "Phonenumber should not be empty."
-//         isvalid = false;
-//     }
-//     // Validation for email 
-//     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-//     if(!emailRegex.test(email)){
-//         emailError.textContent = "Invalid email format."
-//         isvalid = false;
-//     }
-//     if(!isvalid) {
-//         event.preventDefault();
-//     }
-// }
-// function handleDownload() {
-//     window.location.href = "download.php";
-// }
-// let validEmail =true;
-
-//Fetching firstname,lastname and displaying fullname.
-
+/**
+ * Fetching firstname,lastname and displaying fullname.
+ */
 function updateFullName() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     document.getElementById("fullName").value = firstName + " " + lastName;
 }
+/**
+ * Performs both firstname,lastname validity.
+ * 
+ * @param string id 
+ *   This parameter determines which field needs to be validated.
+ *   
+ * @returns boolean
+ *   Returns boolean based on name validity.
+ */
 function validateName(id) {
     let firstName = document.getElementById("firstName").value.trim();
     let lastName = document.getElementById("lastName").value.trim();
@@ -130,6 +73,13 @@ function validateName(id) {
         return isValid;
     }
 }
+
+/**
+ * Performs image validation.
+ * 
+ * @returns boolean
+ *   Whether the file is uploaded or not.
+ */
 function validateFile() {
     let uploadedFile = document.getElementById("imageToUpload");
     let imageErrorMessage = document.getElementById("imageErrorMessage");
@@ -141,6 +91,13 @@ function validateFile() {
     }
     return imageUploaded;
 }
+
+/**
+ * Performs validation of marks entered.
+ * 
+ * @returns boolean
+ *   Validates subject-name,marks and returns boolean value. 
+ */
 function validateMarks() {
   let marks = document.getElementById("marksField").value;
   let marksErrorMessage = document.getElementById("marksErrorMessage");
@@ -198,6 +155,13 @@ function validateMarks() {
   }
   return validMarks;
 }
+
+/**
+ * Perform phone number validation.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on number validation.
+ */
 function validateNumber() {
   let phoneNumber = document.getElementById("phoneField").value.trim();
   let phoneNumberError = document.getElementById("phoneNumberError");
@@ -222,6 +186,12 @@ function validateNumber() {
 
 }
 
+/**
+ * Performs syntax verification of email.
+ * 
+ * @returns boolean
+ *   Returns boolean value based on number validation.
+ */
 function validateEmailSyntax() {
     // Validation for email 
     let validEmailSyntax = true;
@@ -241,6 +211,13 @@ function validateEmailSyntax() {
     }
     return validEmailSyntax;
 }
+
+/**
+ * Uses ajax for getting backend responses.
+ * 
+ * @returns boolean
+ *   Returns boolean based on email validity.
+ */
 async function validateEmail() {
     return new Promise(function (resolve, reject) {
         // Validation for email 
@@ -277,6 +254,13 @@ async function validateEmail() {
         });
 }
 )}
+
+/**
+* Confirms that input value is not empty.
+* 
+* @returns boolean
+*   Returns boolean value based on validation.
+*/
 function notEmpty() {
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
@@ -293,6 +277,16 @@ function notEmpty() {
     }
     return notNull;
 }
+
+/**
+ * Validates the entire form.
+ * 
+ * @param {*} event
+ *   Takes event as parameter.
+ * 
+ * @returns boolean 
+ *   Returns boolean value to the form after validation.
+ */
 async function validateForm(event) {
     if(event)event.preventDefault();
     let isValid = validateName("both");
